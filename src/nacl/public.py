@@ -139,6 +139,21 @@ class Box(encoding.Encodable, StringFixer, object):
 
         return box
 
+    @classmethod
+    def generate(cls, seed):
+        """
+        Computes and returns the public key and secret key using the seed ``seed``.
+
+        :param seed: bytes
+        :rtype: (bytes(public_key), bytes(secret_key))
+        """
+        (pk, sk) = nacl.bindings.crypto_box_seed_keypair(seed)
+
+        return (
+            PublicKey(pk),
+            PrivateKey(sk)
+        )
+
     def encrypt(self, plaintext, nonce, encoder=encoding.RawEncoder):
         """
         Encrypts the plaintext message using the given `nonce` and returns

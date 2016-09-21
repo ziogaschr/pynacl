@@ -16,10 +16,10 @@ from __future__ import absolute_import, division, print_function
 
 from nacl.bindings.crypto_box import (
     crypto_box, crypto_box_BEFORENMBYTES, crypto_box_BOXZEROBYTES,
-    crypto_box_NONCEBYTES, crypto_box_PUBLICKEYBYTES,
+    crypto_box_NONCEBYTES, crypto_box_SEEDBYTES, crypto_box_PUBLICKEYBYTES,
     crypto_box_SECRETKEYBYTES, crypto_box_ZEROBYTES, crypto_box_afternm,
-    crypto_box_beforenm, crypto_box_keypair, crypto_box_open,
-    crypto_box_open_afternm,
+    crypto_box_beforenm, crypto_box_keypair, crypto_box_seed_keypair,
+    crypto_box_open, crypto_box_open_afternm,
 )
 from nacl.bindings.crypto_hash import (
     crypto_hash, crypto_hash_BYTES, crypto_hash_sha256,
@@ -47,11 +47,13 @@ from nacl.bindings.sodium_core import sodium_init
 __all__ = [
     "crypto_box_SECRETKEYBYTES",
     "crypto_box_PUBLICKEYBYTES",
+    "crypto_box_SEEDBYTES",
     "crypto_box_NONCEBYTES",
     "crypto_box_ZEROBYTES",
     "crypto_box_BOXZEROBYTES",
     "crypto_box_BEFORENMBYTES",
     "crypto_box_keypair",
+    "crypto_box_seed_keypair",
     "crypto_box",
     "crypto_box_open",
     "crypto_box_beforenm",

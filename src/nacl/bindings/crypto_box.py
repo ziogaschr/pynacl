@@ -23,6 +23,7 @@ __all__ = ["crypto_box_keypair", "crypto_box"]
 
 crypto_box_SECRETKEYBYTES = lib.crypto_box_secretkeybytes()
 crypto_box_PUBLICKEYBYTES = lib.crypto_box_publickeybytes()
+crypto_box_SEEDBYTES = lib.crypto_box_seedbytes()
 crypto_box_NONCEBYTES = lib.crypto_box_noncebytes()
 crypto_box_ZEROBYTES = lib.crypto_box_zerobytes()
 crypto_box_BOXZEROBYTES = lib.crypto_box_boxzerobytes()
@@ -46,6 +47,26 @@ def crypto_box_keypair():
         ffi.buffer(sk, crypto_box_SECRETKEYBYTES)[:],
     )
 
+def crypto_box_seed_keypair(seed):
+    """
+    Computes and returns the public key and secret key using the seed ``seed``.
+
+    :param seed: bytes
+    :rtype: (bytes(public_key), bytes(secret_key))
+    """
+    if len(seed) != crypto_box_SEEDBYTES:
+            raise ValueError("Invalid seed")
+
+    pk = ffi.new("unsigned char[]", crypto_box_PUBLICKEYBYTES)
+    sk = ffi.new("unsigned char[]", crypto_box_SECRETKEYBYTES)
+
+    rc = lib.crypto_box_seed_keypair(pk, sk, seed)
+    assert rc == 0
+
+    return (
+        ffi.buffer(pk, crypto_box_PUBLICKEYBYTES)[:],
+        ffi.buffer(sk, crypto_box_SECRETKEYBYTES)[:],
+    )
 
 def crypto_box(message, nonce, pk, sk):
     """
